@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f4e8c1">
+  <title>Folio | Ask your document</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Folio home"><span class="brand-mark">f.</span>folio</a>
+      <div class="topbar-note"><span class="status-dot"></span><span>Document workspace</span></div>
+    </header>
+    <main class="workspace">
+      <aside class="document-panel" aria-label="Document upload">
+        <div class="panel-heading">
+          <p class="eyebrow">YOUR SOURCE</p>
+          <h1>One document.<br>Clear answers.</h1>
+        </div>
+        <label class="upload-zone" id="upload-zone" for="pdf-input">
+          <span class="upload-icon" aria-hidden="true">↑</span>
+          <span class="upload-title">Choose a PDF</span>
+          <span class="upload-hint">or drop it here</span>
+          <span class="upload-format">PDF · up to 25 MB</span>
+        </label>
+        <input id="pdf-input" type="file" accept="application/pdf,.pdf" hidden>
+        <div class="document-status" id="document-status" aria-live="polite">
+          <span class="status-indicator"></span>
+          <span id="document-name">No document loaded</span>
+        </div>
+        <button class="replace-button" id="replace-button" type="button" hidden>Replace document</button>
+        <p class="privacy-note">Answers are grounded in the text of your PDF.</p>
+      </aside>
+      <section class="chat-panel" aria-label="Ask questions about your PDF">
+        <div class="chat-heading">
+          <div><p class="eyebrow">DOCUMENT CHAT</p><h2>Ask anything</h2></div>
+          <span class="model-tag">RAG</span>
+        </div>
+        <div class="conversation" id="conversation" aria-live="polite" aria-relevant="additions">
+          <div class="empty-state" id="empty-state">
+            <div class="empty-glyph" aria-hidden="true">✳</div>
+            <h3>Your document, in conversation.</h3>
+            <p>Upload a PDF to begin. Ask for a summary, a detail, or a passage you want to find.</p>
+          </div>
+        </div>
+        <form class="question-form" id="question-form">
+          <label class="sr-only" for="question-input">Your question</label>
+          <textarea id="question-input" rows="1" placeholder="Upload a PDF to start asking..." disabled required></textarea>
+          <button class="send-button" id="send-button" type="submit" aria-label="Send question" title="Send question" disabled><span aria-hidden="true">↑</span></button>
+        </form>
+        <p class="input-footnote">Answers may be incomplete. Check important details in the source.</p>
+      </section>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
