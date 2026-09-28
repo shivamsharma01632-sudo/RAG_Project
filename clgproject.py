@@ -44,7 +44,7 @@ def context(cont):
 
 def create_chain(pdf_path: Path):
     collection_name = f"pdf_{sha256(pdf_path.read_bytes()).hexdigest()[:16]}"
-    embedder = OllamaEmbeddings(model="qwen3-embedding:0.6b")
+    embedder = OllamaEmbeddings(model="qwen3-embedding:0.6b",base_url="https://late-jobs-smash.loca.lt" )
     store = Chroma(
         embedding_function=embedder,
         collection_name=collection_name,
