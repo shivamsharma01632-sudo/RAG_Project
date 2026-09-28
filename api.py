@@ -4,19 +4,6 @@ from clgproject import create_chain
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 from tempfile import TemporaryDirectory
-import os
-from ollama import Client
-import httpx  # Usually installed alongside ollama
-
-# Pulls your localtunnel link dynamically
-ollama_url = os.environ.get("OLLAMA_BASE_URL", "https://late-jobs-smash.loca.lt")
-
-# Create a secure client that bypasses the LocalTunnel security warning page
-http_client = httpx.Client(headers={"Bypass-Tunnel-Reminder": "true"})
-client = Client(host=ollama_url)
-
-# Now your code can run embeddings as normal:
-# response = client.embeddings(model="nomic-embed-text", prompt="...")
 
 app = FastAPI()
 active_chain = None
