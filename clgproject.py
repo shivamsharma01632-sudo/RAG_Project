@@ -4,7 +4,7 @@ from langchain_ollama import OllamaEmbeddings
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.output_parsers import StrOutputParser
 from langchain_chroma import Chroma
-from langchain_core.runnables import RunnableSequence, RunnableParallel,RunnablePassthrough,RunnableLambda
+from langchain_core.runnables import RunnablePassthrough,RunnableLambda
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from dotenv import load_dotenv
 from pathlib import Path
@@ -20,7 +20,7 @@ llm=ChatGroq(
 )
 prompt=PromptTemplate(
     template="""Answer only from the text inside <context>.
-If it does not contain enough information, say "I don't know based on the provided document." Do not use outside knowledge.
+" Do not use outside knowledge.
 
 <context>
 {context}
