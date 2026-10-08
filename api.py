@@ -44,6 +44,7 @@ app.add_middleware(
         "http://127.0.0.1:5500",
         "http://localhost:5500",
         "https://shivamsharma01632-sudo.github.io/RAG_Project/",
+        "https://rag-project-b4lafscmb-ssharma1632.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
