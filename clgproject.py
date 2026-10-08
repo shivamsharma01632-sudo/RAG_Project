@@ -14,7 +14,7 @@ load_dotenv()
 
 persist_directory = Path(__file__).parent / "chroma_db"
 
-loader=PyPDFLoader(r"C:\Users\ongraph\Downloads\atonement.pdf")
+loader=PyPDFLoader(r"C:\Users\ongraph\Downloads\Thomas H. Cormen, Charles E. Leiserson, Ronald L.pdf")
 cursor=loader.load()
 llm=ChatGroq(
      model="openai/gpt-oss-120b",
@@ -61,6 +61,6 @@ chain=RunnableParallel({"context":retreiver|RunnableLambda(context),
 seq=RunnableSequence(chain,prompt,llm,parser)
 
 # seq.get_graph().print_ascii()
-print(seq.invoke("give a character sketch of ceceilia"))
+print(seq.invoke("give me a summary"))
 
 # print(chain.invoke("show me your context"))
