@@ -1,6 +1,6 @@
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from pydantic import BaseModel
-from clgproject import create_chain
+
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -27,7 +27,7 @@ class Question(BaseModel):
 
 @app.post("/upload")
 def upload_pdf(file: UploadFile = File(...)):
-    global active_chain
+    # global active_chain
 
     if Path(file.filename or "").suffix.lower() != ".pdf":
         raise HTTPException(status_code=400, detail="Please upload a PDF file.")
