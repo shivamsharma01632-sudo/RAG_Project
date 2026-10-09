@@ -1,8 +1,3 @@
-"""FastAPI endpoints for uploading and querying PDF documents.
-
-PDF chunks are keyed by the SHA-256 hash of their file contents. Re-uploading
-the same document therefore reuses the vectors already stored in Chroma.
-"""
 
 from __future__ import annotations
 
