@@ -1,4 +1,7 @@
-const API_URL = "http://127.0.0.1:8000";
+// Local backend while developing, Render backend once deployed. Update the Render URL if yours differs.
+const API_URL = ["localhost", "127.0.0.1"].includes(location.hostname)
+  ? "http://127.0.0.1:8000"
+  : "https://folio-rag-api.onrender.com";
 const pdfInput = document.querySelector("#pdf-input");
 const uploadZone = document.querySelector("#upload-zone");
 const replaceButton = document.querySelector("#replace-button");

@@ -1,0 +1,6 @@
+# Vercel only serves the static frontend; the FastAPI backend runs on Render.
+/*
+!index.html
+!script.js
+!styles.css
+!vercel.json

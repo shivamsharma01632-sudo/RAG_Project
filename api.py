@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import logging
+import os
 from hashlib import sha256
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -15,10 +16,14 @@ from langchain_core.documents import Document
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
 from langchain_core.runnables import RunnableLambda, RunnableParallel, RunnablePassthrough
+from dotenv import load_dotenv
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_groq import ChatGroq
-from langchain_ollama import OllamaEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from pydantic import BaseModel
+
+# Reads GROQ_API_KEY / GOOGLE_API_KEY from a local .env; on Render they come from the dashboard.
+load_dotenv()
 
 logging.basicConfig(
     level=logging.INFO,
@@ -30,18 +35,17 @@ app = FastAPI()
 active_chain = None
 MAX_PDF_SIZE = 25 * 1024 * 1024
 PERSIST_DIRECTORY = Path(__file__).parent / "chroma_db"
-COLLECTION_NAME = "pdf_documents"
+# Gemini vectors have a different size than the old Ollama ones, so they need their own collection.
+COLLECTION_NAME = "pdf_documents_gemini"
 index_lock = Lock()
+
+# Comma-separated list, e.g. "https://my-app.vercel.app,http://localhost:5500". Defaults to any origin.
+ALLOWED_ORIGINS = [origin.strip() for origin in os.getenv("ALLOWED_ORIGINS", "*").split(",") if origin.strip()]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://127.0.0.1:5500",
-        "http://localhost:5500",
-        "https://shivamsharma01632-sudo.github.io/RAG_Project/",
-        "https://rag-project-b4lafscmb-ssharma1632.vercel.app","*"
-    ],
-    allow_credentials=True,
+    allow_origins=ALLOWED_ORIGINS,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -53,7 +57,7 @@ class Question(BaseModel):
 
 def get_vector_store() -> Chroma:
     """Open the persisted collection used by every uploaded PDF."""
-    embeddings = OllamaEmbeddings(model="qwen3-embedding:0.6b")
+    embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
     return Chroma(
         collection_name=COLLECTION_NAME,
         embedding_function=embeddings,
@@ -177,7 +181,7 @@ def upload_pdf(file: UploadFile = File(...)):
         logger.exception("PDF preparation failed | file=%s", filename)
         raise HTTPException(
             status_code=503,
-            detail="Could not prepare this PDF. Ensure Ollama is running and the embedding model is installed.",
+            detail="Could not prepare this PDF. Check that GOOGLE_API_KEY is set and the embedding service is reachable.",
         ) from error
     finally:
         file.file.close()

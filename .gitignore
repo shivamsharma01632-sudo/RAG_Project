@@ -1,0 +1,13 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+venv/
+.vercel/
+chroma_db/
+chroma.sqlite3
+
+.vercel
+
+# Local Chroma data created by clgproject.py
+/*-*-*-*-*/
